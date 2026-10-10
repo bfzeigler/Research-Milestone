@@ -1,4 +1,4 @@
-# PySide6 Study Planner
+# Research Milestone
 
 A colorful desktop study-planning app made with the PySide6 framework. The user enters a task, selects a category and study time, and the app adds it to a table and totals the planned minutes.
 
@@ -33,9 +33,4 @@ A colorful desktop study-planning app made with the PySide6 framework. The user 
    python3 app.py
    ```
 
-## What to demonstrate in the video
 
-- Set a daily goal, then add two or three tasks with different categories and time amounts.
-- Mark a task complete and point out that the progress bar updates.
-- Remove a selected task and show that the total planned time updates.
-- Try adding a blank task to show the input validation message.
