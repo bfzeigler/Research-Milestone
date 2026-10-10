@@ -201,9 +201,15 @@ class StudyPlanner(QMainWindow):
         self.progress.setValue(percent)
         self.progress.setFormat(f"{completed} of {goal} minutes completed ({percent}%)")
         count = self.task_table.rowCount()
+        completed_count = sum(
+            1 for row in range(count)
+            if self.task_table.item(row, 3).text() == "✓ Complete"
+        )
+        remaining_count = count - completed_count
         self.summary.setText(
             "No tasks planned yet — add one to get started!" if count == 0
-            else f"{count} task(s) planned • {total} total minutes"
+            else f"{count} task(s) planned • {completed_count} completed • "
+                 f"{remaining_count} remaining • {total} total minutes"
         )
 
 
