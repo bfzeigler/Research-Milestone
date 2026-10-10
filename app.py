@@ -109,7 +109,10 @@ class StudyPlanner(QMainWindow):
         clear_button = QPushButton("Clear All")
         clear_button.setObjectName("danger")
         clear_button.clicked.connect(self.clear_all)
-        for button in (add_button, complete_button, remove_button, clear_button):
+        clear_completed_button = QPushButton("Clear Completed")
+        clear_completed_button.setObjectName("secondary")
+        clear_completed_button.clicked.connect(self.clear_completed)
+        for button in (add_button, complete_button, remove_button, clear_completed_button, clear_button):
             buttons.addWidget(button)
         buttons.addStretch()
         layout.addLayout(buttons)
@@ -174,6 +177,18 @@ class StudyPlanner(QMainWindow):
         if QMessageBox.question(self, "Clear tasks", "Remove every planned task?") == QMessageBox.Yes:
             self.task_table.setRowCount(0)
             self.update_summary()
+
+    def clear_completed(self):
+        completed_rows = [
+            row for row in range(self.task_table.rowCount())
+            if self.task_table.item(row, 3).text() == "✓ Complete"
+        ]
+        if not completed_rows:
+            QMessageBox.information(self, "No completed tasks", "There are no completed tasks to remove.")
+            return
+        for row in reversed(completed_rows):
+            self.task_table.removeRow(row)
+        self.update_summary()
 
     def update_summary(self):
         total = sum(int(self.task_table.item(row, 2).text()) for row in range(self.task_table.rowCount()))
